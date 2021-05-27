@@ -21,11 +21,11 @@
           </div>
           <div class="form-group col-md-12">
               <label for="title"> Password </label>
-              <input type="text" id="password" v-model="password" name="title" class="form-control" placeholder="Enter your Password">
+              <input type="password" id="password" v-model="password" name="title" class="form-control" placeholder="Enter your Password">
           </div>
           <div class="form-group col-md-12">
               <label for="title"> Confirm Password </label>
-              <input type="text" id="confirmPassword" v-model="confirmPassword" name="title" class="form-control" placeholder="Enter your Password again to confirm">
+              <input type="password" id="confirmPassword" v-model="confirmPassword" name="title" class="form-control" placeholder="Enter your Password again to confirm">
           </div>
           <div class="form-group col-md-4 pull-right">
               <button class="btn btn-success" type="submit"> Create Account </button>
@@ -83,15 +83,20 @@
       },
       createUser() {
         let customerData = {
-          username: this.username,
           name: this.name,
           email: this.email,
-          password: this.password
+          username: this.username,
+          passhash: this.password
         };
         this.__submitToServer(customerData);
       },
       __submitToServer(data) {
-        axios.post(`${server.baseURL}/api/users`, data).then(() => {
+        const config = {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+        axios.post(`${server.baseURL}/api/users`, data, config).then(() => {
           router.push({ name: "home" });
         });
       }

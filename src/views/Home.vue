@@ -1,31 +1,28 @@
 <template>
     <div class="container-fluid">
       <div class="text-center">
-        <h1>Nest Customer List App Tutorial</h1>
-       <p> Built with Nest.js, Vue.js and MongoDB</p>
-       <div v-if="user.length === 0">
-            <h2> Account not found at the moment </h2>
-        </div>
+        <h1>Gest Acount</h1>
       </div>
-      <div class="">
+      <div id="user-table" class="">
           <table class="table table-bordered">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">Username</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Edit / Delete</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="user in this.users" v-bind:key="user.id">
                 <td>{{ user.username }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group" style="margin-bottom: 20px;">
-                      <router-link :to="{name: 'Edit', params: {id: user._id}}" class="btn btn-sm btn-outline-secondary">Edit Account </router-link>
-                      <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteUser(user._id)">Delete Account</button>
+                      <router-link :to="{name: 'Edit', params: {id: user.id}}" class="btn btn-sm btn-outline-secondary">Edit Account </router-link>
+                      <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteUser(user.id)">Delete Account</button>
                     </div>
                   </div>
                 </td>
@@ -42,7 +39,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      user: []
+      users: []
     };
   },
   created() {
@@ -52,11 +49,16 @@ export default {
     fetchUser() {
       axios
         .get(`${server.baseURL}/api/users`)
-        .then(data => (this.user = data.data));
+        .then(data => (this.users = data.data));
     },
-    deleteCustomer(id) {
+    deleteUser(id) {
+      /* const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }; */
       axios
-        .delete(`${server.baseURL}/user/delete?userID=${id}`)
+        .delete(`${server.baseURL}/api/users/`+id)
         .then(data => {
           console.log(data);
           window.location.reload();
@@ -64,4 +66,9 @@ export default {
     }
   }
 };
+
+/*
+<div v-if="users.length === 0">
+     <h2> Account not found at the moment </h2>
+ </div> */
 </script>

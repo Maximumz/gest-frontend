@@ -25,7 +25,7 @@
 
 <script>
   import axios from "axios";
-  import { server } from "../../helper";
+  import { server } from "@/helper";
   import router from "../../router";
   export default {
     data() {

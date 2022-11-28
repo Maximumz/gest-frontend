@@ -21,7 +21,7 @@
                 <td>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group" style="margin-bottom: 20px;">
-                      <router-link :to="{name: 'Edit', params: {id: user.id}}" class="btn btn-sm btn-outline-secondary">Edit Account </router-link>
+                      <router-link :to="{name: 'edit', params: {id: user.id}}" class="btn btn-sm btn-outline-secondary">Edit Account </router-link>
                       <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteUser(user.id)">Delete Account</button>
                     </div>
                   </div>
@@ -33,7 +33,8 @@
     </div>
 </template>
 <script>
-import { server } from "../helper";
+import { server } from "@/helper";
+import router from "../router";
 import axios from "axios";
 
 export default {
@@ -42,23 +43,33 @@ export default {
       users: []
     };
   },
-  created() {
+  mounted() {
+    if (!window.localStorage.getItem('gest_access_token')) {
+      return router.push({ name: "login" });
+    }
     this.fetchUser();
   },
   methods: {
     fetchUser() {
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + window.localStorage.getItem('gest_access_token')
+        }
+      };
       axios
-        .get(`${server.baseURL}/api/users`)
+        .get(`${server.baseURL}/api/users`, config)
         .then(data => (this.users = data.data));
     },
     deleteUser(id) {
-      /* const config = {
+      const config = {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + window.localStorage.getItem('gest_access_token')
         }
-      }; */
+      };
       axios
-        .delete(`${server.baseURL}/api/users/`+id)
+        .delete(`${server.baseURL}/api/users/`+id, config)
         .then(data => {
           console.log(data);
           window.location.reload();

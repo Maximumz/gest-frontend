@@ -37,7 +37,7 @@
 
 <script>
   import axios from "axios";
-  import { server } from "../../helper";
+  import { server } from "@/helper";
   import router from "../../router";
   export default {
     data() {
@@ -52,7 +52,6 @@
     },
     methods: {
       validateData() {
-
         const regexUsername = /^[a-zA-Z0-9-_]+$/;
         const regexName = /^(([A-Za-z]+[-']?)*([A-Za-z]+)?\s)+([A-Za-z]+[-']?)*([A-Za-z]+)?$/;
         const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -96,9 +95,16 @@
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         }
-        axios.post(`${server.baseURL}/api/users`, data, config).then(() => {
-          router.push({ name: "home" });
-        });
+        axios.post(`${server.baseURL}/preauth/create`, data, config)
+          .then((response) => {
+            console.log(response);
+            if (response) {
+              router.push({ name: "home" });
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     }
   };

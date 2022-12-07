@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="col-md-12 form-wrapper">
         <h2> Login  </h2>
         <form id="login-post-form" @submit.prevent="validateData">
@@ -23,6 +23,7 @@
   import axios from "axios";
   import { server } from "@/helper";
   import router from "../../router";
+  import store from '../../store/index';
   export default {
     data() {
       return {
@@ -65,9 +66,9 @@
         }
         await axios.post(`${server.baseURL}/preauth/login`, data, config)
           .then((response) => {
-            if (response.status == 201) {
-              window.localStorage.setItem('gest_access_token', response.data.access_token);
-              router.push({ name: "home" });
+            if (response.status === 201) {
+              store.commit('setUser', response.data)
+              router.go(0);
             }
           })
           .catch(function (error) {

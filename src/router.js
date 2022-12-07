@@ -1,18 +1,44 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import HomeComponent from './views/Home.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import UserComponent from './views/user/Index';
+import AdminComponent from './views/admin/Index';
+import PublicComponent from './views/public/Index';
 import EditComponent from '@/components/user/Edit';
-import CreateComponent from './components/user/Create';
-import LoginComponent from './components/user/Login';
+import CreateComponent from '@/components/user/Create';
+import LoginComponent from '@/components/user/Login';
+import LogoutComponent from '@/components/user/Logout';
+import store from '@/store';
+
+let routes = [];
+
+if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin') {
+  routes = [
+    { path: '/', redirect: { name: 'Admin' } },
+    { path: '/login', redirect: { name: 'Admin' } },
+    { path: '/admin', name: 'Admin', component: AdminComponent },
+    { path: '/edit/:id', name: 'edit', component: EditComponent },
+    { path: '/logout', name: 'Logout', LogoutComponent },
+  ];
+
+} else if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'user') {
+  routes = [
+    { path: '/', redirect: { name: 'Home' } },
+    { path: '/login', redirect: { name: 'Home' } },
+    { path: '/home', name: 'Home', component: UserComponent },
+    { path: '/logout', name: 'Logout', LogoutComponent },
+  ];
+} else {
+  routes = [
+    { path: '/', redirect: { name: 'Home' } },
+    { path: '/logout', redirect: { name: 'Home' } },
+    { path: '/home', name: 'Home', component: PublicComponent },
+    { path: '/create', name: 'Create', component: CreateComponent },
+    { path: '/login', name: 'Login', component: LoginComponent },
+  ];
+}
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    { path: '/', redirect: { name: 'home' } },
-    { path: '/home', name: 'home', component: HomeComponent },
-    { path: '/create', name: 'create', component: CreateComponent },
-    { path: '/login', name: 'login', component: LoginComponent },
-    { path: '/edit/:id', name: 'edit', component: EditComponent },
-  ],
+  history: createWebHistory(),
+  routes: routes,
 })
 
 export default router;

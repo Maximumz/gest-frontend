@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="col-md-12 form-wrapper">
         <h2> Create Account </h2>
         <form id="create-post-form" @submit.prevent="validateData">
@@ -99,7 +99,7 @@
           .then((response) => {
             console.log(response);
             if (response) {
-              router.push({ name: "home" });
+              router.push({ name: "Home" });
             }
           })
           .catch(function (error) {

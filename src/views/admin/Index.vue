@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
       <div class="text-center">
-        <h1>Gest Acount</h1>
+        <h1>GEST Accounts</h1>
       </div>
       <div id="user-table" class="">
           <table class="table table-bordered">
@@ -34,8 +34,18 @@
 </template>
 <script>
 import { server } from "@/helper";
-import router from "../router";
+import router from "../../router";
 import axios from "axios";
+import store from "@/store";
+
+const accessToken = store.getters.StateUser.user ? store.getters.StateUser.user.access_token : null;
+
+const config = {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Bearer ' + accessToken
+  }
+};
 
 export default {
   data() {
@@ -44,32 +54,20 @@ export default {
     };
   },
   mounted() {
-    if (!window.localStorage.getItem('gest_access_token')) {
-      return router.push({ name: "login" });
+    if (!accessToken) {
+      return router.go(0);
     }
     this.fetchUser();
   },
   methods: {
     fetchUser() {
-      const config = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + window.localStorage.getItem('gest_access_token')
-        }
-      };
       axios
-        .get(`${server.baseURL}/api/users`, config)
+        .get(`${server.baseURL}/api/admin/users`, config)
         .then(data => (this.users = data.data));
     },
     deleteUser(id) {
-      const config = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + window.localStorage.getItem('gest_access_token')
-        }
-      };
       axios
-        .delete(`${server.baseURL}/api/users/`+id, config)
+        .delete(`${server.baseURL}/api/admin/users/`+id, config)
         .then(data => {
           console.log(data);
           window.location.reload();
@@ -77,9 +75,4 @@ export default {
     }
   }
 };
-
-/*
-<div v-if="users.length === 0">
-     <h2> Account not found at the moment </h2>
- </div> */
 </script>

@@ -7,7 +7,7 @@ const reqConfig = {
   }
 };
 const state = {
-  user: null,
+  user: [],
   notables: null,
 };
 const getters = {
@@ -62,8 +62,8 @@ const actions = {
   }
 };
 const mutations = {
-  setUser(state, username) {
-      state.user = username
+  setUser(state, user) {
+      state.user = user
   },
   setNotables(state, posts) {
       state.posts = posts

@@ -6,6 +6,7 @@ import EditComponent from '@/components/user/Edit';
 import CreateComponent from '@/components/user/Create';
 import LoginComponent from '@/components/user/Login';
 import LogoutComponent from '@/components/user/Logout';
+import CreateNotable from '@/components/notable/Create';
 import store from '@/store';
 
 let routes = [];
@@ -17,6 +18,7 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
     { path: '/login', redirect: { name: 'Admin' } },
     { path: '/admin', name: 'Admin', component: AdminComponent },
     { path: '/edit/:id', name: 'edit', component: EditComponent },
+    { path: '/create-notable', name: 'Notables', component: CreateNotable },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 
@@ -25,6 +27,7 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
     { path: '/home', name: 'Home', component: UserComponent },
+    { path: '/create-notable', name: 'Notables', component: CreateNotable },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 } else {

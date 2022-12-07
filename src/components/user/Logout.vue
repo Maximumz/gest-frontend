@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center d-flex justify-content-center align-items-center" style="height: 100vh;">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -24,7 +24,7 @@
       logoutUser() {
         const user = typeof store.getters.StateUser.user != null ? store.getters.StateUser.user : null;
         if (!user) {
-          router.push({ name: 'Home' });
+          router.go(0);
         }
         const params = new URLSearchParams();
         params.append('user', JSON.stringify(user));
@@ -41,7 +41,7 @@
             if (response.status === 201) {
               store.commit('logout');
               localStorage.removeItem('vuex');
-              router.push({ name: 'Home' });
+              router.go(0);
             }
           })
           .catch(function (error) {

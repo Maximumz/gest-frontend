@@ -18,13 +18,16 @@
       return {};
     },
     async mounted() {
-      console.log('fired');
       await this.logoutUser();
     },
     methods: {
       logoutUser() {
+        const user = typeof store.getters.StateUser.user != null ? store.getters.StateUser.user : null;
+        if (!user) {
+          router.push({ name: 'Home' });
+        }
         const params = new URLSearchParams();
-        params.append('user', store.getters.StateUser.user);
+        params.append('user', JSON.stringify(user));
         this.__submitToServer(params);
       },
       async __submitToServer(data) {
@@ -37,7 +40,8 @@
           .then((response) => {
             if (response.status === 201) {
               store.commit('logout');
-              router.go(0);
+              localStorage.removeItem('vuex');
+              router.push({ name: 'Home' });
             }
           })
           .catch(function (error) {

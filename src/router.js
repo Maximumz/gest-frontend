@@ -13,10 +13,11 @@ let routes = [];
 if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin') {
   routes = [
     { path: '/', redirect: { name: 'Admin' } },
+    { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Admin' } },
     { path: '/admin', name: 'Admin', component: AdminComponent },
     { path: '/edit/:id', name: 'edit', component: EditComponent },
-    { path: '/logout', name: 'Logout', LogoutComponent },
+    { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 
 } else if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'user') {
@@ -24,7 +25,7 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
     { path: '/home', name: 'Home', component: UserComponent },
-    { path: '/logout', name: 'Logout', LogoutComponent },
+    { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 } else {
   routes = [

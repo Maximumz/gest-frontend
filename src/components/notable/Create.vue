@@ -49,7 +49,7 @@
       },
       __submitToServer(data) {
         axios.post(`${server.baseURL}/api/notables`, data).then(data => {
-          router.push({ name: "/" });
+          router.push({ name: "Home" });
         });
       }
     }

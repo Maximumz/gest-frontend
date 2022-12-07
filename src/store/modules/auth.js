@@ -58,7 +58,7 @@ const actions = {
   },
   async logout({commit}) {
     let user = null
-    commit('logout', user)
+    commit('logout', user);
   }
 };
 const mutations = {

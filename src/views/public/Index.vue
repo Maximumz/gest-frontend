@@ -1,13 +1,11 @@
 <template>
-    <div class="container">
+    <div class="container mt-5">
       <div class="row">
         <div class="text-center">
           <div class="text-center">
             <h1>Welcome to GEST</h1>
             <figure class="text-center">
-              <blockquote class="blockquote">
-                <p>Gest - A notable deed or exploit</p>
-              </blockquote>
+              <img class="img-fluid w-25 mb-4" src="/assets/img/logo-color.svg" alt="GEST logo">
               <figcaption class="blockquote-footer">
                 <cite title="Source Title">Collins English Dictionary. Copyright © HarperCollins Publishers</cite>
               </figcaption>

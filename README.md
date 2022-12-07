@@ -1,4 +1,6 @@
 # gest-vue
+<img src="./public/assets/img/gest-high-resolution-logo-white-on-black-background.png" style="max-width: 500px;">
+
 
 ## Project setup
 ```

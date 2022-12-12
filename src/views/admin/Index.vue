@@ -63,7 +63,8 @@ export default {
     fetchUser() {
       axios
         .get(`${server.baseURL}/api/admin/users`, config)
-        .then(data => (this.users = data.data));
+        .then(data => (this.users = data.data))
+        .catch(error => (console.log(error)));
     },
     deleteUser(id) {
       axios

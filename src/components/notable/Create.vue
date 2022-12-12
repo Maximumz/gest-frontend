@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-5">
     <div class="col-md-12 form-wrapper">
         <h2> Create Notable </h2>
         <form id="create-post-form" @submit.prevent="validateData">
@@ -99,6 +99,14 @@
       async getAllNotables() {
         await axios.post(`${server.baseURL}/api/notables/fetchAll`, {}, config).then(data => {
           this.notables = data.data;
+        });
+        const random = Math.floor(Math.random() * this.notables.length);
+        const pick = this.notables[random];
+
+        this.$notify({
+          title: pick.title,
+          text: pick.content + ' - ' + pick.author,
+          duration: -1
         });
       },
       deleteNotable(id) {

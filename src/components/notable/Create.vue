@@ -38,7 +38,7 @@
           <td>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group" style="margin-bottom: 20px;">
-                <router-link :to="{name: 'edit', params: {id: notable.id}}" class="btn btn-sm btn-outline-secondary">Edit Notable </router-link>
+                <router-link :to="{name: 'Edit Notable', params: {id: notable.id}}" class="btn btn-sm btn-outline-secondary">Edit Notable</router-link>
                 <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteNotable(notable.id)">Delete Notable</button>
               </div>
             </div>
@@ -100,6 +100,11 @@
         await axios.post(`${server.baseURL}/api/notables/fetchAll`, {}, config).then(data => {
           this.notables = data.data;
         });
+        if (this.notables) {
+          this.selectRandomNotable();
+        }
+      },
+      selectRandomNotable() {
         const random = Math.floor(Math.random() * this.notables.length);
         const pick = this.notables[random];
 

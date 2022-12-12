@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container mt-5">
       <div class="text-center">
         <h1>GEST Account</h1>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-5">
     <div class="col-md-12 form-wrapper">
         <h2> Create Account </h2>
         <form id="create-post-form" @submit.prevent="validateData">

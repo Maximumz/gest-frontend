@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container mt-5">
       <div class="text-center">
         <h1>GEST Accounts</h1>
       </div>
@@ -21,7 +21,7 @@
                 <td>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group" style="margin-bottom: 20px;">
-                      <router-link :to="{name: 'edit', params: {id: user.id}}" class="btn btn-sm btn-outline-secondary">Edit Account </router-link>
+                      <router-link :to="{name: 'Edit User', params: {id: user.id}}" class="btn btn-sm btn-outline-secondary">Edit Account </router-link>
                       <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteUser(user.id)">Delete Account</button>
                     </div>
                   </div>

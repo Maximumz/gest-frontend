@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from "vue-router";
 import UserComponent from './views/user/Index';
 import AdminComponent from './views/admin/Index';
 import PublicComponent from './views/public/Index';
-import EditComponent from '@/components/user/Edit';
+import EditUserComponent from '@/components/user/Edit';
 import CreateComponent from '@/components/user/Create';
 import LoginComponent from '@/components/user/Login';
 import LogoutComponent from '@/components/user/Logout';
 import CreateNotable from '@/components/notable/Create';
+import EditNotableComponent from '@/components/notable/Edit';
 import store from '@/store';
 
 let routes = [];
@@ -17,7 +18,8 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Admin' } },
     { path: '/admin', name: 'Admin', component: AdminComponent },
-    { path: '/edit/:id', name: 'edit', component: EditComponent },
+    { path: '/edit-user/:id', name: 'Edit User', component: EditUserComponent },
+    { path: '/edit-notable/:id', name: 'Edit Notable', component: EditNotableComponent },
     { path: '/create-notable', name: 'Notables', component: CreateNotable },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];

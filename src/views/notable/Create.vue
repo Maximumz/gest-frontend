@@ -20,7 +20,7 @@
           </div>
         </form>
     </div>
-    <div id="notable-table" class="" v-if="this.notables.length">
+    <div id="notable-table" class="mt-5" v-if="this.notables.length">
       <table class="table table-bordered">
         <thead class="thead-dark">
         <tr>
@@ -38,7 +38,7 @@
           <td>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group" style="margin-bottom: 20px;">
-<!--                <router-link :to="{name: 'Edit Notable', params: {id: notable.id}}" class="btn btn-sm btn-outline-secondary">Edit Notable</router-link>-->
+<!--            <router-link :to="{name: 'Edit Notable', params: {id: notable.id}}" class="btn btn-sm btn-outline-secondary">Edit Notable</router-link>-->
                 <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteNotable(notable.id)">Delete Notable</button>
               </div>
             </div>
@@ -99,26 +99,6 @@
       async getAllNotables() {
         await axios.post(`${server.baseURL}/api/notables/fetchAll`, {}, config).then(data => {
           this.notables = data.data;
-        });
-        if (this.notables) {
-          this.cycleThroughNotables();
-        }
-      },
-      cycleThroughNotables() {
-        this.selectRandomNotable();
-        const randomNotableInst = this;
-        window.setInterval(function(){
-          randomNotableInst.selectRandomNotable();
-        }, 17000);
-      },
-      selectRandomNotable() {
-        const random = Math.floor(Math.random() * this.notables.length);
-        const pick = this.notables[random];
-
-        this.$notify({
-          title: pick.title,
-          text: pick.content + ' - ' + pick.author,
-          duration: 15000
         });
       },
       deleteNotable(id) {

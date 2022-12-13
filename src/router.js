@@ -1,25 +1,27 @@
 import { createRouter, createWebHistory } from "vue-router";
-import UserComponent from './views/user/Index';
-import AdminComponent from './views/admin/Index';
-import PublicComponent from './views/public/Index';
-import EditUserComponent from '@/components/user/Edit';
-import CreateComponent from '@/components/user/Create';
-import LoginComponent from '@/components/user/Login';
-import LogoutComponent from '@/components/user/Logout';
-import CreateNotable from '@/components/notable/Create';
-import EditNotableComponent from '@/components/notable/Edit';
+import PublicComponent from '@/views/public/Index';
+import EditUserComponent from '@/views/user/Edit';
+import CreateComponent from '@/views/user/Create';
+import LoginComponent from '@/views/user/Login';
+import LogoutComponent from '@/views/user/Logout';
+import CreateNotable from '@/views/notable/Create';
+import EditNotableComponent from '@/views/notable/Edit';
+import ManageUsers from "@/views/user/admin/ManageUsers";
+import Inspire from "@/views/notable/Inspire";
 import store from '@/store';
 
 let routes = [];
 
 if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin') {
   routes = [
-    { path: '/', redirect: { name: 'Admin' } },
-    { path: '/login', redirect: { name: 'Admin' } },
-    { path: '/admin', name: 'Admin', component: AdminComponent },
+    { path: '/', redirect: { name: 'Home' } },
+    { path: '/login', redirect: { name: 'Home' } },
+    { path: '/home', name: 'Home', component: PublicComponent },
+    { path: '/inspire', name: 'Inspire', component: Inspire },
     { path: '/edit-user/:id', name: 'Edit User', component: EditUserComponent },
     { path: '/edit-notable/:id', name: 'Edit Notable', component: EditNotableComponent },
     { path: '/create-notable', name: 'Notables', component: CreateNotable },
+    { path: '/admin', name: 'Admin', component: ManageUsers },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 
@@ -27,7 +29,8 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
   routes = [
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
-    { path: '/home', name: 'Home', component: UserComponent },
+    { path: '/home', name: 'Home', component: PublicComponent },
+    { path: '/inspire', name: 'Inspire', component: Inspire },
     { path: '/create-notable', name: 'Notables', component: CreateNotable },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];

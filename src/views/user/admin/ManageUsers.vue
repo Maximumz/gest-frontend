@@ -34,7 +34,7 @@
 </template>
 <script>
 import { server } from "@/helper";
-import router from "../../router";
+import router from "@/router";
 import axios from "axios";
 import store from "@/store";
 

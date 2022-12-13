@@ -6,13 +6,13 @@
           <img src="/assets/img/logo-color.svg" class="img-fluid rounded-start" alt="Logo">
         </div>
         <div class="col-md-10">
-          <div class="card-header">
-            Quote - {{ this.notable.title }}
-          </div>
+          <div class="card-header">{{ this.notable.title }}</div>
           <div class="card-body">
             <blockquote class="blockquote mb-0">
               <p>{{ this.notable.content }}</p>
-              <footer class="blockquote-footer">Author - <cite title="Source Title">{{ this.notable.author }}</cite></footer>
+              <footer class="blockquote-footer">
+                <cite title="Source Title">{{ this.notable.author }}</cite>
+              </footer>
             </blockquote>
           </div>
         </div>

@@ -15,7 +15,6 @@ let routes = [];
 if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin') {
   routes = [
     { path: '/', redirect: { name: 'Admin' } },
-    { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Admin' } },
     { path: '/admin', name: 'Admin', component: AdminComponent },
     { path: '/edit-user/:id', name: 'Edit User', component: EditUserComponent },

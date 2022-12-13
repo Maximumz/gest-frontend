@@ -1,5 +1,5 @@
 <template>
-  <notifications position="bottom right" classes="alert alert-warning" width="80%" />
+  <notifications position="top center" classes="alert alert-success" width="100%" />
   <div id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">
@@ -33,9 +33,19 @@
     },
     mounted() {
       let routes = router.getRoutes();
-      routes.shift();
-      this.routes = routes;
+      this.routes = this.removeValues(routes);
     },
-    methods: {}
+    methods: {
+      removeValues(routes) {
+        for (let i = 0; i < routes.length; i++) {
+          let obj = routes[i];
+          if (['/', '/edit-notable/:id', '/edit-user/:id'].indexOf(obj.path) !== -1) {
+            routes.splice(i, 1);
+            i--;
+          }
+        }
+        return routes;
+      }
+    }
   };
 </script>

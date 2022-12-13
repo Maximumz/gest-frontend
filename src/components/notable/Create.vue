@@ -38,7 +38,7 @@
           <td>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group" style="margin-bottom: 20px;">
-                <router-link :to="{name: 'Edit Notable', params: {id: notable.id}}" class="btn btn-sm btn-outline-secondary">Edit Notable</router-link>
+<!--                <router-link :to="{name: 'Edit Notable', params: {id: notable.id}}" class="btn btn-sm btn-outline-secondary">Edit Notable</router-link>-->
                 <button class="btn btn-sm btn-outline-secondary" v-on:click="deleteNotable(notable.id)">Delete Notable</button>
               </div>
             </div>
@@ -101,8 +101,15 @@
           this.notables = data.data;
         });
         if (this.notables) {
-          this.selectRandomNotable();
+          this.cycleThroughNotables();
         }
+      },
+      cycleThroughNotables() {
+        this.selectRandomNotable();
+        const randomNotableInst = this;
+        window.setInterval(function(){
+          randomNotableInst.selectRandomNotable();
+        }, 17000);
       },
       selectRandomNotable() {
         const random = Math.floor(Math.random() * this.notables.length);
@@ -111,7 +118,7 @@
         this.$notify({
           title: pick.title,
           text: pick.content + ' - ' + pick.author,
-          duration: -1
+          duration: 15000
         });
       },
       deleteNotable(id) {

@@ -20,10 +20,10 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import { server } from "@/helper";
-  import router from "../../router";
-  import store from '../../store';
+  import axios from 'axios';
+  import { server } from '@/helper';
+  import router from '@/router';
+  import store from '@/store';
   export default {
     data() {
       return {

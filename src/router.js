@@ -9,6 +9,7 @@ import EditNotableComponent from '@/views/notable/Edit';
 import ManageUsers from "@/views/user/admin/ManageUsers";
 import Inspire from "@/views/notable/Inspire";
 import store from '@/store';
+import jwt_decode from "jwt-decode";
 
 let routes = [];
 
@@ -48,5 +49,15 @@ const router = createRouter({
   history: createWebHistory(),
   routes: routes,
 })
+
+router.beforeEach(async (to, from) => {
+  if (store.getters.StateUser.user && store.getters.StateUser.user.access_token) {
+    // If the jwt token has expired we will log them out
+    const jwtData = jwt_decode(store.getters.StateUser.user.access_token);
+    if (jwtData.iat === jwtData.exp || jwtData.iat > jwtData.exp) {
+      return { name: 'Logout' }
+    }
+  }
+});
 
 export default router;

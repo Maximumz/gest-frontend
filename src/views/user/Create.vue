@@ -38,7 +38,7 @@
 <script>
   import axios from "axios";
   import { server } from "@/helper";
-  import router from "../../router";
+  import router from "@/router";
   export default {
     data() {
       return {
@@ -97,7 +97,6 @@
         }
         axios.post(`${server.baseURL}/preauth/create`, data, config)
           .then((response) => {
-            console.log(response);
             if (response) {
               router.push({ name: "Home" });
             }

@@ -1,9 +1,9 @@
 <template>
-  <div class="container mt-5">
-    <div class="card px-0 col-md-12" v-if="this.notable">
-      <div class="row g-0">
+  <div class="container mt-5" v-if="this.notable">
+    <div class="card px-0 col-md-12">
+      <div id="quote" class="row g-0">
         <div class="col-md-2">
-          <img src="/assets/img/logo-color.svg" class="img-fluid rounded-start" alt="Logo">
+          <img src="/assets/img/logo-color.svg" class="img-fluid" alt="Logo">
         </div>
         <div class="col-md-10">
           <div class="card-header">{{ this.notable.title }}</div>
@@ -18,8 +18,25 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 mt-5">
-      <button type="button" class="btn btn-success btn-lg" @click="selectRandomNotable()">Shuffle</button>
+    <div class="col-md-12 mt-5 d-flex justify-content-start">
+      <button type="button" class="btn btn-success btn-lg mr-2" @click="selectRandomNotable()">Shuffle</button>
+      <button type="button" class="btn btn-primary btn-lg" @click="createImageFromQuote()">Make Image</button>
+    </div>
+    <div id="quote-to-share" class="row g-0" ></div>
+  </div>
+  <div class="container mt-5" v-else>
+    <div class="row d-flex">
+      <div class="col-md-4 mb-3">
+        <img src="/assets/img/logo-color.svg" class="img-fluid rounded-start" alt="Logo">
+      </div>
+      <div class="col-md-8 d-flex align-items-center">
+        <blockquote>
+          <p class="mb-2 text-center">You do not have any notables yet but you can add one!</p>
+          <router-link :to="{name: 'Notables'}" class="btn btn-sm btn-success d-block">
+            Create
+          </router-link>
+        </blockquote>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +45,7 @@
 import axios from "axios";
 import { server } from "@/helper";
 import store from "@/store";
+import * as htmlToImage from 'html-to-image';
 
 const accessToken = store.getters.StateUser.user ? store.getters.StateUser.user.access_token : null;
 
@@ -62,6 +80,16 @@ export default {
     selectRandomNotable() {
       const random = Math.floor(Math.random() * this.notables.length);
       this.notable = this.notables[random];
+    },
+    createImageFromQuote() {
+      const target = document.getElementById('quote-to-share');
+      htmlToImage.toPng(document.getElementById('quote'))
+          .then(function (dataUrl) {
+            target.innerHTML = "<img src='"+ dataUrl +"' class='img-fluid mt-5'>";
+          })
+          .catch(function (error) {
+            console.error('oops, something went wrong!', error);
+          });
     }
   }
 };

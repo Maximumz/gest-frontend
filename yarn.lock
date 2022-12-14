@@ -1049,11 +1049,6 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kyvg/vue3-notification@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@kyvg/vue3-notification/-/vue3-notification-2.7.0.tgz#2264d0244853b4cfc6a1aa4f2bfc508891d471a9"
-  integrity sha512-Eti6jRGips9fpf2WdRjlOOJGyjCZ35qt84CeTeFr5piAwXaMpvgzea4dqqTK5KCfqK3qz/zwwxAd/8AToLYL8A==
-
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
@@ -3493,6 +3488,11 @@ html-tags@^3.1.0:
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-3.2.0.tgz#dbb3518d20b726524e4dd43de397eb0a95726961"
   integrity sha512-vy7ClnArOZwCnqZgvv+ddgHgJiAFXe3Ge9ML5/mBctVJoUoYPCdxVucOywjDARn6CVoh3dRSFdPHy2sX80L0Wg==
 
+html-to-image@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/html-to-image/-/html-to-image-1.11.2.tgz#684052ac34fdca8fb2481be268ced6b92c4026c0"
+  integrity sha512-M4D58k0RWRH65J+XzuBzxgWjoSf4mgSrMrqab7LwGXt3b5GY43qRPKM3iIrI0MrCToBcsQYcIqbIZDMVFh+dMw==
+
 html-webpack-plugin@^5.1.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/html-webpack-plugin/-/html-webpack-plugin-5.5.0.tgz#c3911936f57681c1f9f4d8b68c158cd9dfe52f50"
@@ -3852,6 +3852,11 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 kind-of@^6.0.2:
   version "6.0.3"

@@ -1,5 +1,4 @@
 <template>
-  <notifications position="top center" classes="alert alert-success" width="100%" />
   <div id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">

@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5" v-if="this.notable">
     <div class="card px-0 col-md-12">
-      <div id="quote" class="row g-0">
+      <div id="quote" class="row g-0 bg-white">
         <div class="col-md-2">
           <img src="/assets/img/logo-color.svg" class="img-fluid" alt="Logo">
         </div>
@@ -83,9 +83,9 @@ export default {
     },
     createImageFromQuote() {
       const target = document.getElementById('quote-to-share');
-      htmlToImage.toPng(document.getElementById('quote'))
+      htmlToImage.toJpeg(document.getElementById('quote'))
           .then(function (dataUrl) {
-            target.innerHTML = "<img src='"+ dataUrl +"' class='img-fluid mt-5 bg-white'>";
+            target.innerHTML = "<img src='"+ dataUrl +"' class='img-fluid mt-5'>";
           })
           .catch(function (error) {
             console.error('oops, something went wrong!', error);

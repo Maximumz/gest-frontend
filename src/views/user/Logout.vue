@@ -12,7 +12,6 @@
   import axios from "axios";
   import { server } from "@/helper";
   import router from "@/router";
-  import store from '@/store';
   export default {
     data() {
       return {};
@@ -22,7 +21,7 @@
     },
     methods: {
       logoutUser() {
-        const user = typeof store.getters.StateUser.user != null ? store.getters.StateUser.user : null;
+        const user = this.$store.getters.isAuthenticated ? this.$store.getters.StateUser : null;
         if (!user) {
           router.go(0);
         }
@@ -39,9 +38,9 @@
         await axios.post(`${server.baseURL}/auth/logout`, data, config)
           .then((response) => {
             if (response.status === 201) {
-              store.commit('logout');
+              this.$store.dispatch('logout');
               localStorage.removeItem('vuex');
-              router.push('Home');
+              router.go(0);
             }
           })
           .catch(function (error) {

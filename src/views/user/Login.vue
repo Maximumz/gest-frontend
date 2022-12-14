@@ -23,7 +23,6 @@
   import axios from 'axios';
   import { server } from '@/helper';
   import router from '@/router';
-  import store from '@/store';
   export default {
     data() {
       return {
@@ -67,7 +66,7 @@
         await axios.post(`${server.baseURL}/preauth/login`, data, config)
           .then((response) => {
             if (response.status === 201) {
-              store.commit('setUser', response.data)
+              this.$store.dispatch('login', response.data.user)
               router.go(0);
             }
           })

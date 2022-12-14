@@ -55,7 +55,7 @@
   import { server } from "@/helper";
   import store from "@/store";
 
-  const accessToken = store.getters.StateUser.user ? store.getters.StateUser.user.access_token : null;
+  const accessToken = store.getters.isAuthenticated ? store.getters.StateUser.access_token : null;
 
   const config = {
     headers: {

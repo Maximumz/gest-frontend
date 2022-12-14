@@ -11,8 +11,7 @@ const state = {
   notables: null,
 };
 const getters = {
-  isAuthenticated: state => !!state.user,
-  StateNotables: state => state.posts,
+  isAuthenticated: state => (state.user !== null && state.user.username),
   StateUser: state => state.user,
 };
 const actions = {
@@ -34,11 +33,12 @@ const actions = {
     }
   },
   async login({commit}, User) {
-    if (validator.validate(User)) {
-      requestPrep.prepare(User);
-      await axios.post('login', User)
-      await commit('setUser', User.get('username'))
-    }
+    // if (validator.validate(User)) {
+    //   requestPrep.prepare(User);
+    //   await axios.post('login', User)
+    //   await commit('setUser', User)
+    // }
+    await commit('setUser', User)
   },
   async createNotable({dispatch}, post) {
     await axios.post('notable', post)
@@ -57,8 +57,7 @@ const actions = {
     commit('setNotables', response.data)
   },
   async logout({commit}) {
-    let user = null
-    commit('logout', user);
+    commit('logout', null);
   }
 };
 const mutations = {
@@ -71,12 +70,12 @@ const mutations = {
   logout(state) {
       state.user = null
       state.notables = null
-  },
+  }
 };
 const requestPrep = {
   prepare(formData) {
     let params = new URLSearchParams();
-    for(var pair of formData.entries()) {
+    for(let pair of formData.entries()) {
       params.append(pair[0], pair[1]);
     }
     return params;

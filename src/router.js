@@ -13,7 +13,7 @@ import jwt_decode from 'jwt-decode';
 
 let routes = [];
 
-if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin') {
+if (store.getters.isAuthenticated && store.getters.StateUser.role === 'admin') {
   routes = [
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
@@ -26,7 +26,7 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 
-} else if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'user') {
+} else if (store.getters.isAuthenticated && store.getters.StateUser.role === 'user') {
   routes = [
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
@@ -38,6 +38,8 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
 } else {
   routes = [
     { path: '/', redirect: { name: 'Home' } },
+    { path: '/inspire', redirect: { name: 'Home' } },
+    { path: '/logout', redirect: { name: 'Home' } },
     { path: '/home', name: 'Home', component: PublicComponent },
     { path: '/create', name: 'Create', component: CreateComponent },
     { path: '/login', name: 'Login', component: LoginComponent },
@@ -50,12 +52,13 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-  if (store.getters.StateUser.user && store.getters.StateUser.user.access_token) {
+  if (store.getters.isAuthenticated) {
     // If the jwt token has expired we will log them out
-    const jwtData = jwt_decode(store.getters.StateUser.user.access_token);
+    const jwtData = jwt_decode(store.getters.StateUser.access_token);
     if ((jwtData.exp < Math.round(Date.now() / 1000))) {
-      store.getters.StateUser.user.access_token = null;
-      return { name: 'Logout' }
+     if (to.name !== 'Logout') {
+        return { name: 'Logout' };
+      }
     }
   }
 });

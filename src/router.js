@@ -9,7 +9,7 @@ import EditNotableComponent from '@/views/notable/Edit';
 import ManageUsers from "@/views/user/admin/ManageUsers";
 import Inspire from "@/views/notable/Inspire";
 import store from '@/store';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
 let routes = [];
 
@@ -38,7 +38,6 @@ if (store.getters.StateUser.user && store.getters.StateUser.user.role === 'admin
 } else {
   routes = [
     { path: '/', redirect: { name: 'Home' } },
-    { path: '/logout', redirect: { name: 'Home' } },
     { path: '/home', name: 'Home', component: PublicComponent },
     { path: '/create', name: 'Create', component: CreateComponent },
     { path: '/login', name: 'Login', component: LoginComponent },
@@ -54,7 +53,8 @@ router.beforeEach(async (to, from) => {
   if (store.getters.StateUser.user && store.getters.StateUser.user.access_token) {
     // If the jwt token has expired we will log them out
     const jwtData = jwt_decode(store.getters.StateUser.user.access_token);
-    if (jwtData.iat === jwtData.exp || jwtData.iat > jwtData.exp) {
+    if ((jwtData.exp < Math.round(Date.now() / 1000))) {
+      store.getters.StateUser.user.access_token = null;
       return { name: 'Logout' }
     }
   }

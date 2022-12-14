@@ -85,7 +85,7 @@ export default {
       const target = document.getElementById('quote-to-share');
       htmlToImage.toPng(document.getElementById('quote'))
           .then(function (dataUrl) {
-            target.innerHTML = "<img src='"+ dataUrl +"' class='img-fluid mt-5'>";
+            target.innerHTML = "<img src='"+ dataUrl +"' class='img-fluid mt-5 bg-white'>";
           })
           .catch(function (error) {
             console.error('oops, something went wrong!', error);

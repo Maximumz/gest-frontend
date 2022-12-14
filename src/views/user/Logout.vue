@@ -41,7 +41,7 @@
             if (response.status === 201) {
               store.commit('logout');
               localStorage.removeItem('vuex');
-              router.go(0);
+              router.push('Home');
             }
           })
           .catch(function (error) {

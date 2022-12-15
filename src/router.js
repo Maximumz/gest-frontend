@@ -38,8 +38,9 @@ if (store.getters.isAuthenticated && store.getters.StateUser.role === 'admin') {
 } else {
   routes = [
     { path: '/', redirect: { name: 'Home' } },
-    { path: '/inspire', redirect: { name: 'Home' } },
-    { path: '/logout', redirect: { name: 'Home' } },
+    { path: '/inspire', redirect: { name: 'Login' } },
+    { path: '/logout', redirect: { name: 'Login' } },
+    { path: '/create-notable', redirect: { name: 'Login' } },
     { path: '/home', name: 'Home', component: PublicComponent },
     { path: '/create', name: 'Create', component: CreateComponent },
     { path: '/login', name: 'Login', component: LoginComponent },

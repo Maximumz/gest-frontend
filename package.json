@@ -8,13 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@dvuckovic/vue3-bootstrap-icons": "^1.0.5",
     "@popperjs/core": "^2.11.6",
+    "autoprefixer": "^10.4.13",
     "axios": "^1.2.0",
     "bootstrap": "^5.0.1",
     "core-js": "^3.26.1",
     "cors": "^2.8.5",
     "html-to-image": "^1.11.2",
     "jwt-decode": "^3.1.2",
+    "precss": "^4.0.0",
+    "sass": "^1.56.2",
+    "sass-loader": "^13.2.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0",

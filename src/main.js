@@ -3,7 +3,7 @@ import App from '@/App';
 import router from '@/router';
 import store from '@/store';
 import cors from 'cors';
-import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons';
 
 const app = createApp(App)

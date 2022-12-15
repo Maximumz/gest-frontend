@@ -1,3 +1,3 @@
 export const server = {
-    baseURL: 'https://gest-backend.onrender.com'
+    baseURL: process.env.VUE_APP_BACKEND_API
 }

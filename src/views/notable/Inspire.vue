@@ -18,11 +18,45 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 mt-5 d-flex justify-content-start">
-      <button type="button" class="btn btn-success btn-lg mr-2" @click="selectRandomNotable()">Shuffle</button>
-      <button type="button" class="btn btn-primary btn-lg" @click="createImageFromQuote()">Make Image</button>
+    <div class="row">
+      <div class="col-md-12 mt-5 d-flex justify-content-start">
+        <button type="button" class="btn btn-success btn-lg mr-2" @click="selectRandomNotable()">Shuffle Notables</button>
+      </div>
     </div>
-    <div id="quote-to-share" class="row g-0" ></div>
+    <div class="row" v-if="this.filterTitleKeys">
+      <div class="col-md-12 mt-4">
+        <p>Filter by matching titles:</p>
+        <h4>
+          <span v-for="filter in this.filterTitleKeys" class="badge bg-warning text-dark me-2 text-capitalize" v-on:click="addFilter('title', filter)">{{ filter }}</span>
+        </h4>
+      </div>
+      <div class="col-md-12" v-if="this.filterTitleKeysApplied">
+        <p>Filters applied:</p>
+        <h4>
+          <span v-for="filtered in this.filterTitleKeysApplied" class="badge bg-secondary me-2 text-capitalize" v-on:click="removeFilter('title', filtered)">{{ filtered }}</span>
+        </h4>
+      </div>
+    </div>
+    <div class="row" v-if="this.filterAuthorKeys">
+      <div class="col-md-12 mt-4">
+        <p>Filter by matching authors:</p>
+        <h4>
+          <span v-for="filter in this.filterAuthorKeys" class="badge bg-warning text-dark me-2 text-capitalize" v-on:click="addFilter('author', filter)">{{ filter }}</span>
+        </h4>
+      </div>
+      <div class="col-md-12" v-if="this.filterAuthorKeysApplied">
+        <p>Filters applied:</p>
+        <h4>
+          <span v-for="filtered in this.filterAuthorKeysApplied" class="badge bg-secondary me-2 text-capitalize" v-on:click="removeFilter('author', filtered)">{{ filtered }}</span>
+        </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <button type="button" class="btn btn-primary btn-lg" @click="createImageFromQuote()">Make Image</button>
+        <div id="quote-to-share" class="row g-0" ></div>
+      </div>
+    </div>
   </div>
   <div class="container mt-5" v-else>
     <div class="row d-flex">
@@ -60,6 +94,11 @@ export default {
   data() {
     return {
       notables: [],
+      filteredNotables: [],
+      filterTitleKeys: [],
+      filterAuthorKeys: [],
+      filterTitleKeysApplied: [],
+      filterAuthorKeysApplied: [],
       notable: {
         title: '',
         content: '',
@@ -67,8 +106,9 @@ export default {
       }
     };
   },
-  mounted() {
-    this.getAllNotables();
+  async mounted() {
+    await this.getAllNotables();
+    this.getAllMatchingKeysToFilter();
   },
   methods: {
     async getAllNotables() {
@@ -78,8 +118,12 @@ export default {
       });
     },
     selectRandomNotable() {
-      const random = Math.floor(Math.random() * this.notables.length);
-      this.notable = this.notables[random];
+      let notables = this.notables;
+      if (this.filteredNotables.length) {
+        notables = this.filteredNotables;
+      }
+      const random = Math.floor(Math.random() * notables.length);
+      this.notable = notables[random];
     },
     createImageFromQuote() {
       const target = document.getElementById('quote-to-share');
@@ -90,6 +134,75 @@ export default {
           .catch(function (error) {
             console.error('oops, something went wrong!', error);
           });
+    },
+    filterNotables() {
+      this.filteredNotables = [];
+       const filteredByTitle = this.notables.filter(notable => {
+        let match = false;
+        if (this.filterTitleKeysApplied.includes(notable.title.trim().toLowerCase())) {
+          match = true;
+        }
+        return match
+      });
+      const filteredByAuthor = this.notables.filter(notable => {
+        let match = false;
+        if (this.filterAuthorKeysApplied.includes(notable.author.trim().toLowerCase())) {
+          match = true;
+        }
+        return match
+      });
+      this.filteredNotables = this.filteredNotables.concat(filteredByTitle, filteredByAuthor)
+      this.selectRandomNotable();
+    },
+    removeFilter(type, filter) {
+      if (type === 'title') {
+        this.filterTitleKeys.push(filter);
+        let index = this.filterTitleKeysApplied.indexOf(filter);
+        if (index !== null) {
+          this.filterTitleKeysApplied.splice(index, 1);
+          this.filterNotables();
+        }
+      } else if(type === 'author') {
+        this.filterAuthorKeys.push(filter);
+        const index = this.filterAuthorKeysApplied.indexOf(filter);
+        if (index !== null) {
+          this.filterAuthorKeysApplied.splice(index, 1);
+          this.filterNotables();
+        }
+      }
+    },
+    addFilter(type, filter) {
+      if (type === 'title') {
+        this.filterTitleKeysApplied.push(filter);
+        let index = this.filterTitleKeys.indexOf(filter);
+        if (index !== null) {
+          this.filterTitleKeys.splice(index, 1);
+        }
+        this.filterNotables();
+      } else if(type === 'author') {
+        this.filterAuthorKeysApplied.push(filter);
+        let index = this.filterAuthorKeys.indexOf(filter);
+        if (index !== null) {
+          this.filterAuthorKeys.splice(index, 1);
+        }
+        this.filterNotables();
+      }
+    },
+    getAllMatchingKeysToFilter() {
+      this.filterTitleKeys = [];
+      this.filterAuthorKeys = [];
+
+      const titles = this.notables.map(a => a.title.trim().toLowerCase());
+      const authors = this.notables.map(a => a.author.trim().toLowerCase());
+
+      const filteredTitles = titles.filter((v, i) => titles.indexOf(v) !== i);
+      const uniqueTitles = new Set(filteredTitles);
+
+      const filteredAuthors = authors.filter((v, i) => authors.indexOf(v) !== i);
+      const uniqueAuthors = new Set(filteredAuthors);
+
+      this.filterTitleKeys = Array.from(uniqueTitles);
+      this.filterAuthorKeys = Array.from(uniqueAuthors);
     }
   }
 };

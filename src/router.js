@@ -18,10 +18,10 @@ if (store.getters.isAuthenticated && store.getters.StateUser.role === 'admin') {
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
     { path: '/home', name: 'Home', component: PublicComponent },
-    { path: '/inspire', name: 'Inspire', component: Inspire },
+    { path: '/inspire', name: 'Be Inspired', component: Inspire },
     { path: '/edit-user/:id', name: 'Edit User', component: EditUserComponent },
     { path: '/edit-notable/:id', name: 'Edit Notable', component: EditNotableComponent },
-    { path: '/create-notable', name: 'Notables', component: CreateNotable },
+    { path: '/create-notable', name: 'Create Notables', component: CreateNotable },
     { path: '/admin', name: 'Admin', component: ManageUsers },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
@@ -31,8 +31,8 @@ if (store.getters.isAuthenticated && store.getters.StateUser.role === 'admin') {
     { path: '/', redirect: { name: 'Home' } },
     { path: '/login', redirect: { name: 'Home' } },
     { path: '/home', name: 'Home', component: PublicComponent },
-    { path: '/inspire', name: 'Inspire', component: Inspire },
-    { path: '/create-notable', name: 'Notables', component: CreateNotable },
+    { path: '/inspire', name: 'Be Inspired', component: Inspire },
+    { path: '/create-notable', name: 'Create Notables', component: CreateNotable },
     { path: '/logout', name: 'Logout', component: LogoutComponent },
   ];
 } else {
